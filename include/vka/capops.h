@@ -31,6 +31,14 @@ vka_cnode_saveCaller(const cspacepath_t* src)
            );
 }
 
+inline static int 
+vka_cnode_saveTCBCaller(const cspacepath_t *src, const vka_object_t *tcb)
+{
+    return seL4_CNode_SaveTCBCaller(src->root, src->capPtr, src->capDepth, 
+            tcb->cptr);
+}
+
+
 inline static int
 vka_cnode_copy(const cspacepath_t* dest, const cspacepath_t* src, seL4_CapRights rights)
 {
