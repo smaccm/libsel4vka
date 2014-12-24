@@ -101,12 +101,11 @@ static inline int vka_alloc_cnode_object(vka_t *vka, uint32_t slot_bits, vka_obj
 {
     return vka_alloc_object(vka, seL4_CapTableObject, slot_bits, result);
 }
-#ifdef CONFIG_EDF
+
 static inline int vka_alloc_sched_context(vka_t *vka, vka_object_t *result)
 {
     return vka_alloc_object(vka, seL4_SchedContextObject, seL4_SchedContextBits, result);
 }
-#endif /* CONFIG_EDF */
 
 /*resource allocation interfaces for virtual machine extensions on x86*/
 #ifdef CONFIG_VTX
@@ -212,9 +211,7 @@ LEAKY(page_table)
 LEAKY(page_map_level4)
 LEAKY(page_directory_pointer_table)
 #endif
-#ifdef CONFIG_EDF
 LEAKY(sched_context)
-#endif /* CONFIG_EDF */
 #ifdef CONFIG_VTX
 LEAKY(vcpu)
 LEAKY(ept_page_directory_pointer_table)
@@ -266,10 +263,8 @@ vka_get_object_size(seL4_Word objectType, seL4_Word objectSize)
     case seL4_KernelImageObject:
         return seL4_KernelImageBits;
 #endif 
-#ifdef CONFIG_EDF
     case seL4_SchedContextObject:
         return seL4_SchedContextBits;
-#endif /* CONFIG_EDF */
 #if defined(ARCH_ARM)
         /* ARM-specific objects. */
     case seL4_ARM_SmallPageObject:
